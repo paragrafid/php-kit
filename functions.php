@@ -1,6 +1,6 @@
 <?php
 
-use SalimId\Kit\Collection;
+use Paragraf\Kit\Collection;
 
 if (!function_exists('collect')) {
     function collect(array $items = [])

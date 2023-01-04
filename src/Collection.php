@@ -81,7 +81,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     /**
      * Count items.
      *
-     * @return int
+     * @return integer
      */
     public function count(): int
     {
@@ -315,12 +315,8 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      */
     public function unique($uniqueness = null)
     {
-        if (static::isLinear($this->items)) {
-            return new static(array_unique($this->items));
-        }
-
         if (empty($uniqueness)) {
-            throw new InvalidArgumentException('The uniqueness must be present.');
+            $uniqueness = [Conversion::class, 'toString'];
         }
 
         if (!is_callable($uniqueness) && !is_string($uniqueness)) {
@@ -332,14 +328,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
 
         foreach ($this->items as $key => $value) {
             $unique = is_callable($uniqueness) ? $uniqueness($value, $key) : $this->getItemField($value, $uniqueness);
-
-            if (!in_array($type = gettype($unique), ['string', 'integer'])) {
-                throw new InvalidArgumentException(
-                    'The uniqueness callable must return a string or an integer, ' . $type . ' given.'
-                );
-            }
-
-            $unique = (string) $unique;
+            $unique = Conversion::toString($unique);
 
             if (in_array($unique, $uniques)) {
                 continue;
