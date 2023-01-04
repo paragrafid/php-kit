@@ -35,8 +35,12 @@ class Conversion
      */
     public static function toString($item): string
     {
-        if (is_object($item) && method_exists($item, '__toString')) {
-            return (string) $item;
+        if (is_object($item)) {
+            if (method_exists($item, '__toString')) {
+                return (string) $item;
+            }
+
+            return static::toString(get_object_vars($item));
         }
 
         if (is_array($item)) {
