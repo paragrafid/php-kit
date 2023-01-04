@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use Paragraf\Kit\Collection;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class CollectionTest extends TestCase
 {
@@ -62,6 +63,17 @@ class CollectionTest extends TestCase
         $this->assertFalse(Collection::isAssoc([3, 2, 1]));
         $this->assertFalse(Collection::isAssoc(['foo', 'bar', 'baz']));
         $this->assertTrue(Collection::isAssoc([0, 'foo' => 'bar', 3, 1, 2]));
+    }
+
+    public function testIsLinear()
+    {
+        $this->assertTrue(Collection::isLinear([]));
+        $this->assertTrue(Collection::isLinear([3, 2, 1]));
+        $this->assertTrue(Collection::isLinear(['foo', 'bar', 'baz']));
+        $this->assertTrue(Collection::isLinear([0, 'foo' => 'bar', 3, 1, 2]));
+        $this->assertTrue(Collection::isLinear([0, new stdClass, 1, 2]));
+        $this->assertFalse(Collection::isLinear([0, [3], 1, 2]));
+        $this->assertFalse(Collection::isLinear([0, ['foo' => 'bar'], 3, 1, 2]));
     }
 
     public function testCanWhereIn()
