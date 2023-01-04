@@ -281,7 +281,7 @@ class CollectionTest extends TestCase
                 'sex' => 'male',
                 'age' => 20,
             ],
-                [
+            (object) [
                 'name' => 'Adam',
                 'sex' => 'male',
                 'age' => 24,
@@ -306,8 +306,29 @@ class CollectionTest extends TestCase
                 'sex' => 'female',
                 'age' => 25,
             ],
+            (object) [
+                'name' => 'George',
+                'sex' => 'male',
+                'age' => 25,
+            ],
+            [
+                'name' => 'Juan',
+                'sex' => 'male',
+                'age' => 27,
+            ],
         ];
         $people = new Collection($people);
+
+        $this->assertEquals([
+            'John',
+            'Bob',
+            'Adam',
+            'Ana',
+            'Alice',
+            'George',
+            'Sophia',
+            'Juan',
+        ], $people->unique()->pluck('name')->values());
 
         $this->assertEquals([
             'John',
@@ -315,6 +336,7 @@ class CollectionTest extends TestCase
             'Ana',
             'Alice',
             'George',
+            'Juan',
         ], $people->unique('age')->pluck('name')->values());
 
         $this->assertEquals([
@@ -324,7 +346,12 @@ class CollectionTest extends TestCase
             'Alice',
             'George',
             'Sophia',
+            'Juan',
         ], $people->unique(function ($person) {
+            if (is_object($person)) {
+                return $person->sex . $person->age;
+            }
+
             return $person['sex'] . $person['age'];
         })->pluck('name')->values());
     }

@@ -25,4 +25,28 @@ class ConversionTest extends TestCase
         $this->assertFalse(Conversion::toBoolean(''));
         $this->assertFalse(Conversion::toBoolean(' '));
     }
+
+    public function testCanToString()
+    {
+        $c = new class {
+            public function __toString()
+            {
+                return 'Foo';
+            }
+        };
+
+        $this->assertEquals('[0]', Conversion::toString([0]));
+        $this->assertEquals('[]', Conversion::toString([]));
+        $this->assertEquals('[]', Conversion::toString(new stdClass));
+
+        $o = new stdClass;
+        $o->foo = 123;
+
+        $this->assertEquals('{"foo":123}', Conversion::toString($o));
+
+        $this->assertEquals('Foo', Conversion::toString(new $c));
+        $this->assertEquals('1.231', Conversion::toString('1.231'));
+        $this->assertEquals('5', Conversion::toString('5'));
+        $this->assertEquals(' ', Conversion::toString(' '));
+    }
 }
