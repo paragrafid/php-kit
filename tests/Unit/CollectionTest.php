@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use SalimId\Kit\Collection;
+use Paragraf\Kit\Collection;
 use PHPUnit\Framework\TestCase;
 
 class CollectionTest extends TestCase

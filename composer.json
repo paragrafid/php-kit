@@ -1,5 +1,5 @@
 {
-    "name": "salimid/php-kit",
+    "name": "paragraf/php-kit",
     "description": "The PHP Kit is a set of simple classes and helpers to make life easier.",
     "type": "library",
     "require-dev": {
@@ -14,7 +14,7 @@
             "functions.php"
         ],
         "psr-4": {
-            "SalimId\\Kit\\": "src/"
+            "Paragraf\\Kit\\": "src/"
         }
     },
     "authors": [

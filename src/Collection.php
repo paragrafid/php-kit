@@ -1,6 +1,6 @@
 <?php
 
-namespace SalimId\Kit;
+namespace Paragraf\Kit;
 
 use ArrayAccess;
 use ArrayIterator;

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use SalimId\Kit\Conversion;
+use Paragraf\Kit\Conversion;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
