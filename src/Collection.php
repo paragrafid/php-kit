@@ -144,16 +144,27 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     /**
      * Check if given array is associative.
      *
-     * @param array<mixed, mixed> $arr
+     * @param array<mixed> $arr
      * @return boolean
      */
-    public static function isAssoc(array $arr)
+    public static function isAssoc(array $arr): bool
     {
         if ([] === $arr) {
             return false;
         }
 
         return array_keys($arr) !== range(0, count($arr) - 1);
+    }
+
+    /**
+     * Check if given array is linear.
+     *
+     * @param array<mixed> $arr
+     * @return boolean
+     */
+    public static function isLinear(array $arr): bool
+    {
+        return count($arr) === count($arr, COUNT_RECURSIVE);
     }
 
     /**
@@ -299,11 +310,46 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     /**
      * Remove duplicates.
      *
+     * @param mixed $uniqueness Key for associative collection or a callback returning a uniqueness.
      * @return static
      */
-    public function unique()
+    public function unique($uniqueness = null)
     {
-        return new static(array_unique($this->items));
+        if (static::isLinear($this->items)) {
+            return new static(array_unique($this->items));
+        }
+
+        if (empty($uniqueness)) {
+            throw new InvalidArgumentException('The uniqueness must be present.');
+        }
+
+        if (!is_callable($uniqueness) && !is_string($uniqueness)) {
+            throw new InvalidArgumentException('The uniqueness must be a string or a callable.');
+        }
+
+        $uniques = [];
+        $items = [];
+
+        foreach ($this->items as $key => $value) {
+            $unique = is_callable($uniqueness) ? $uniqueness($value, $key) : $this->getItemField($value, $uniqueness);
+
+            if (!in_array($type = gettype($unique), ['string', 'integer'])) {
+                throw new InvalidArgumentException(
+                    'The uniqueness callable must return a string or an integer, ' . $type . ' given.'
+                );
+            }
+
+            $unique = (string) $unique;
+
+            if (in_array($unique, $uniques)) {
+                continue;
+            }
+
+            $uniques[] = $unique;
+            $items[$key] = $value;
+        }
+
+        return new static($items);
     }
 
     /**

@@ -259,4 +259,73 @@ class CollectionTest extends TestCase
             'weight' => 60,
         ], $a->merge($b)->merge($c)->items());
     }
+
+    public function testCanUnique()
+    {
+        $this->assertEquals([
+            0 => 1,
+            1 => 2,
+            3 => 4,
+            4 => 3,
+            5 => 5,
+        ], (new Collection([1, 2, 2, 4, 3, 5, 3, 1]))->unique()->items());
+
+        $people = [
+            [
+                'name' => 'John',
+                'sex' => 'male',
+                'age' => 20,
+            ],
+            [
+                'name' => 'Bob',
+                'sex' => 'male',
+                'age' => 20,
+            ],
+                [
+                'name' => 'Adam',
+                'sex' => 'male',
+                'age' => 24,
+            ],
+            [
+                'name' => 'Ana',
+                'sex' => 'female',
+                'age' => 23,
+            ],
+            [
+                'name' => 'Alice',
+                'sex' => 'female',
+                'age' => 26,
+            ],
+            [
+                'name' => 'George',
+                'sex' => 'male',
+                'age' => 25,
+            ],
+            [
+                'name' => 'Sophia',
+                'sex' => 'female',
+                'age' => 25,
+            ],
+        ];
+        $people = new Collection($people);
+
+        $this->assertEquals([
+            'John',
+            'Adam',
+            'Ana',
+            'Alice',
+            'George',
+        ], $people->unique('age')->pluck('name')->values());
+
+        $this->assertEquals([
+            'John',
+            'Adam',
+            'Ana',
+            'Alice',
+            'George',
+            'Sophia',
+        ], $people->unique(function ($person) {
+            return $person['sex'] . $person['age'];
+        })->pluck('name')->values());
+    }
 }
