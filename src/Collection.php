@@ -452,13 +452,12 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     /**
      * Reverse items.
      *
-     * @param boolean $preserveKeys
      * @return static
      */
-    public function reverse(bool $preserveKeys = true)
+    public function reverse()
     {
         $items = $this->items;
-        $items = array_reverse($items, $preserveKeys);
+        $items = array_reverse($items, true);
 
         return new static($items);
     }

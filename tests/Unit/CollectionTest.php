@@ -161,7 +161,7 @@ class CollectionTest extends TestCase
             0 => 4
         ], $items);
 
-        $items = (new Collection([4, 5, 3, 1, 2]))->reverse(false)->items();
+        $items = (new Collection([4, 5, 3, 1, 2]))->reverse()->values();
 
         $this->assertEquals([2, 1, 3, 5, 4], $items);
     }
