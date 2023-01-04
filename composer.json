@@ -1,0 +1,35 @@
+{
+    "name": "salimid/php-kit",
+    "description": "The PHP Kit is a set of simple classes and helpers to make life easier.",
+    "type": "library",
+    "require-dev": {
+        "psy/psysh": "^0.11.10",
+        "phpunit/phpunit": "^9.5",
+        "phpstan/phpstan": "^1.9",
+        "squizlabs/php_codesniffer": "^3.7"
+    },
+    "license": "MIT",
+    "autoload": {
+        "files": [
+            "functions.php"
+        ],
+        "psr-4": {
+            "SalimId\\Kit\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Salim Romadhon",
+            "email": "salimromadhon@pm.me"
+        }
+    ],
+    "scripts": {
+        "cs": "./vendor/bin/phpcs",
+        "stan": "./vendor/bin/phpstan analyse --memory-limit=-1",
+        "test": "./vendor/bin/phpunit --do-not-cache-result",
+        "tink": [
+            "Composer\\Config::disableProcessTimeout",
+            "./vendor/bin/psysh"
+        ]
+    }
+}
