@@ -418,7 +418,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     }
 
     /**
-     * Filter items based on where condition
+     * Filter items based on where condition.
      *
      * @param string $key
      * @param mixed $value
@@ -591,5 +591,15 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     public function __debugInfo(): array
     {
         return $this->items;
+    }
+
+    /**
+     * Cast as string.
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return Conversion::toString($this->items);
     }
 }

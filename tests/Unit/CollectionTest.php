@@ -367,4 +367,15 @@ class CollectionTest extends TestCase
             return $person['sex'] . $person['age'];
         })->pluck('name')->values());
     }
+
+    public function testCanBeConvertedIntoString()
+    {
+        $this->assertEquals('{"foo":123,"bar":[4,5,6],"baz":{"foo":"1"}}', (string) (new Collection([
+            'foo' => 123,
+            'bar' => [4, 5, 6],
+            'baz' => [
+                'foo' => '1',
+            ],
+        ])));
+    }
 }
