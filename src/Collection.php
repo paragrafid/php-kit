@@ -570,7 +570,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      */
     public function keys()
     {
-        return array_keys($this->items);
+        return new static(array_keys($this->items));
     }
 
     /**
@@ -580,7 +580,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      */
     public function values()
     {
-        return array_values($this->items);
+        return new static(array_values($this->items));
     }
 
     /**

@@ -31,7 +31,7 @@ class CollectionTest extends TestCase
         // Remove an item.
         unset($items[2]);
 
-        $this->assertEquals([4, 5, 1, 7, 6], $items->values());
+        $this->assertEquals([4, 5, 1, 7, 6], $items->values()->items());
     }
 
     public function testCanCount()
@@ -82,7 +82,7 @@ class CollectionTest extends TestCase
             'foo' => 1,
             'bar' => 2,
             'baz' => 3,
-        ]))->whereIn(['bar'])->values();
+        ]))->whereIn(['bar'])->values()->items();
 
         $this->assertEquals([2], $items);
 
@@ -98,7 +98,7 @@ class CollectionTest extends TestCase
                 'title' => 'Baz',
                 'category' => 'B',
             ],
-        ]))->whereIn('category', ['B'])->values();
+        ]))->whereIn('category', ['B'])->values()->items();
 
         $this->assertEquals([
             [
@@ -114,7 +114,7 @@ class CollectionTest extends TestCase
             'foo' => 1,
             'bar' => 2,
             'baz' => 3,
-        ]))->whereNotIn(['bar'])->values();
+        ]))->whereNotIn(['bar'])->values()->items();
 
         $this->assertEquals([1, 3], $items);
 
@@ -131,7 +131,7 @@ class CollectionTest extends TestCase
                 'title' => 'Baz',
                 'category' => 'B',
             ],
-        ]))->whereNotIn('category', ['B'])->values();
+        ]))->whereNotIn('category', ['B'])->values()->items();
 
         $this->assertEquals([
             [
@@ -156,7 +156,7 @@ class CollectionTest extends TestCase
             1 => 5,
         ], $items);
 
-        $items = (new Collection([4, 5, 3, 1, 2]))->sort()->values();
+        $items = (new Collection([4, 5, 3, 1, 2]))->sort()->values()->items();
 
         $this->assertEquals([1, 2, 3, 4, 5], $items);
     }
@@ -173,7 +173,7 @@ class CollectionTest extends TestCase
             0 => 4
         ], $items);
 
-        $items = (new Collection([4, 5, 3, 1, 2]))->reverse()->values();
+        $items = (new Collection([4, 5, 3, 1, 2]))->reverse()->values()->items();
 
         $this->assertEquals([2, 1, 3, 5, 4], $items);
     }
@@ -217,14 +217,14 @@ class CollectionTest extends TestCase
 
     public function testCanPrepend()
     {
-        $items = (new Collection([1, 2, 3]))->prepend(5, 6)->values();
+        $items = (new Collection([1, 2, 3]))->prepend(5, 6)->values()->items();
 
         $this->assertEquals([5, 6, 1, 2, 3], $items);
     }
 
     public function testCanAppend()
     {
-        $items = (new Collection([1, 2, 3]))->append(5, 6)->values();
+        $items = (new Collection([1, 2, 3]))->append(5, 6)->values()->items();
 
         $this->assertEquals([1, 2, 3, 5, 6], $items);
     }
@@ -340,7 +340,7 @@ class CollectionTest extends TestCase
             'George',
             'Sophia',
             'Juan',
-        ], $people->unique()->pluck('name')->values());
+        ], $people->unique()->pluck('name')->values()->items());
 
         $this->assertEquals([
             'John',
@@ -349,7 +349,7 @@ class CollectionTest extends TestCase
             'Alice',
             'George',
             'Juan',
-        ], $people->unique('age')->pluck('name')->values());
+        ], $people->unique('age')->pluck('name')->values()->items());
 
         $this->assertEquals([
             'John',
@@ -365,7 +365,7 @@ class CollectionTest extends TestCase
             }
 
             return $person['sex'] . $person['age'];
-        })->pluck('name')->values());
+        })->pluck('name')->values()->items());
     }
 
     public function testCanBeConvertedIntoString()
