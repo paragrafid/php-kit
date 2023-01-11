@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Paragraf\Kit\Collection;
+use Paragraf\Kit\Comparison;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -377,5 +378,57 @@ class CollectionTest extends TestCase
                 'foo' => '1',
             ],
         ])));
+    }
+
+    public function testCanSortNatural()
+    {
+        $this->assertEquals(
+            [
+                'img1.png',
+                'img2.png',
+                'img10.png',
+                'img12.png',
+            ],
+            (new Collection([
+                'img1.png',
+                'img10.png',
+                'img12.png',
+                'img2.png',
+            ]))
+                ->sort([Comparison::class, 'stringNaturalOrder'])
+                ->values()
+                ->items()
+        );
+
+        $this->assertEquals(
+            [
+                'Bob',
+                'Adrian',
+                'Alice',
+                'George',
+            ],
+            (new Collection([
+                [
+                    'name' => 'Adrian',
+                    'file' => 'img2.png',
+                ],
+                [
+                    'name' => 'George',
+                    'file' => 'img12.png',
+                ],
+                [
+                    'name' => 'Alice',
+                    'file' => 'img10.png',
+                ],
+                [
+                    'name' => 'Bob',
+                    'file' => 'img1.png',
+                ],
+            ]))
+                ->sortBy('file', [Comparison::class, 'stringNaturalOrder'])
+                ->pluck('name')
+                ->values()
+                ->items()
+        );
     }
 }

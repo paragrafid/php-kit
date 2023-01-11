@@ -527,16 +527,11 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     {
         $items = $this->items;
 
-        $callback = $callback ?? 'strcmp';
+        $callback = $callback ?? [Comparison::class, 'stringOrder'];
 
         return $this->sort(function ($before, $after) use ($key, $callback) {
             $valueBefore = $this->getItemField($before, $key);
             $valueAfter = $this->getItemField($after, $key);
-
-            if ($callback === 'strcmp') {
-                $valueBefore = is_null($valueBefore) ? '' : $valueBefore;
-                $valueAfter = is_null($valueAfter) ? '' : $valueAfter;
-            }
 
             return $callback($valueBefore, $valueAfter);
         });
@@ -566,7 +561,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     /**
      * Get keys.
      *
-     * @return array<int, mixed>
+     * @return static
      */
     public function keys()
     {
@@ -576,7 +571,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     /**
      * Get values.
      *
-     * @return array<int, mixed>
+     * @return static
      */
     public function values()
     {
