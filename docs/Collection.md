@@ -4,7 +4,7 @@ Collection is a class for dealing with arrays.
 
 ## Sorting
 
-```
+``` php
 use Paragraf\Kit\Collection;
 
 $numbers = new Collection([4, 3, 5, 1, 2]);
