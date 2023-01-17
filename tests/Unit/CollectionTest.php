@@ -216,6 +216,34 @@ class CollectionTest extends TestCase
         );
     }
 
+    public function testCanKeyBy()
+    {
+        $items = new Collection([
+            [
+                'email' => 'ana@example.com',
+                'name' => 'Ana',
+            ],
+            [
+                'email' => 'adam@example.com',
+                'name' => 'Adam',
+            ],
+            [
+                'email' => 'george@example.com',
+                'name' => 'George',
+            ],
+            [
+                'email' => 'adam@example.com',
+                'name' => 'Adam J.',
+            ],
+        ]);
+
+        $this->assertEquals([
+            'ana@example.com' => 'Ana',
+            'george@example.com' => 'George',
+            'adam@example.com' => 'Adam J.',
+        ], $items->keyBy('email')->pluck('name')->items());
+    }
+
     public function testCanPrepend()
     {
         $items = (new Collection([1, 2, 3]))->prepend(5, 6)->values()->items();

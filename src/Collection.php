@@ -10,8 +10,12 @@ use InvalidArgumentException;
 use IteratorAggregate;
 use JsonSerializable;
 
+use Paragraf\Kit\Traits\DisableSet;
+
 class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSerializable
 {
+    use DisableSet;
+
     /**
      * Items
      *
@@ -535,6 +539,29 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
 
             return $callback($valueBefore, $valueAfter);
         });
+    }
+
+    /**
+     * Key the items.
+     *
+     * @param mixed $keyable
+     * @return static
+     */
+    public function keyBy($keyable)
+    {
+        if (!is_callable($keyable) && !is_string($keyable)) {
+            throw new InvalidArgumentException('The keyable must be a string or a callable.');
+        }
+
+        $keyed = [];
+
+        foreach ($this->items as $key => $value) {
+            $key = is_callable($keyable) ? $keyable($value, $key) : $this->getItemField($value, $keyable);
+
+            $keyed[$key] = $value;
+        }
+
+        return new static($keyed);
     }
 
     /**

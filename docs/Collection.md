@@ -15,9 +15,9 @@ $students = new Collection([
     ['name' => 'Sophia', 'age' => 22],
 ]);
 
-$sortedNumbers = $numbers->sort();
+$sortedNumbers = $numbers->sort()->values()->items();
 // [1, 2, 3, 4, 5]
 
-$sortedStudents = $students->sortBy('age')->pluck('name')->values();
+$sortedStudents = $students->sortBy('age')->pluck('name')->values()->items();
 // ['Sophia', 'Ana', 'John', 'Adam']
 ```
