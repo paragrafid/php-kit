@@ -208,7 +208,7 @@ class CollectionTest extends TestCase
             [
                 'title' => 'No Date 2',
             ],
-        ]))->sortBy('date')->pluck('title')->implode(' - ');
+        ]))->sortBy('date')->pluck('title')->join(' - ');
 
         $this->assertEquals(
             'No Date 1 - No Date 2 - 1 January 2022 - 23 March 2022 - 2 April 2022 - 5 June 2022 - 5 August 2022',

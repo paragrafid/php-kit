@@ -11,8 +11,8 @@ The `Paragraf\Kit\Collection` class provides convenience for dealing with arrays
   - [`first()`](#first)
   - [`get()`](#get)
   - [`hasItems()`](#hasitems)
-  - [`implode()`](#implode)
   - [`items()`](#items)
+  - [`join()`](#join)
   - [`keys()`](#keys)
   - [`keyBy()`](#keyby)
   - [`last()`](#last)
@@ -143,18 +143,6 @@ $collection->hasItems();
 // true
 ```
 
-### `implode()`
-
-Returns a string from the items.
-
-``` php
-$collection = new Collection(['foo', 'bar', 'baz']);
-
-$collection->implode('-');
-
-// 'foo-bar-baz'
-```
-
 ### `items()`
 
 Returns the items as an `array`.
@@ -169,6 +157,18 @@ $collection->items();
 $collection->sort()->items();
 
 // [1 => 'bar', 2 => 'baz', 0 => 'foo']
+```
+
+### `join()`
+
+Returns a string from the items.
+
+``` php
+$collection = new Collection(['foo', 'bar', 'baz']);
+
+$collection->join('-');
+
+// 'foo-bar-baz'
 ```
 
 ### `keys()`

@@ -600,14 +600,20 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     }
 
     /**
-     * Implode items.
+     * Join items.
      *
      * @param string $separator
      * @return string
      */
-    public function implode(string $separator = '')
+    public function join(string $separator = '')
     {
-        return implode($separator, $this->items);
+        $items = array_values($this->items);
+
+        foreach ($items as &$item) {
+            $item = Conversion::toString($item);
+        }
+
+        return implode($separator, $items);
     }
 
     /**
