@@ -244,6 +244,14 @@ class CollectionTest extends TestCase
         ], $items->keyBy('email')->pluck('name')->items());
     }
 
+    public function testCanReduce()
+    {
+        $collection = new Collection([1, 2, 3]);
+
+        $this->assertEquals(6, $collection->reduce(fn ($carry, $item) => $carry + $item));
+        $this->assertEquals(11, $collection->reduce(fn ($carry, $item) => $carry + $item, 5));
+    }
+
     public function testCanPrepend()
     {
         $items = (new Collection([1, 2, 3]))->prepend(5, 6)->values()->items();

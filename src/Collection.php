@@ -565,6 +565,24 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     }
 
     /**
+     * Reduce the items.
+     *
+     * @param callable $callback
+     * @param mixed $intial
+     * @return mixed
+     */
+    public function reduce(callable $callback, $intial = null)
+    {
+        $carry = $intial;
+
+        foreach ($this->items as $key => $item) {
+            $carry = $callback($carry, $item, $key);
+        }
+
+        return $carry;
+    }
+
+    /**
      * Implode items.
      *
      * @param string $separator
