@@ -309,6 +309,24 @@ class CollectionTest extends TestCase
         ], $a->merge($b)->merge($c)->items());
     }
 
+    public function testCanEach()
+    {
+        $sumKeys = 0;
+        $sumValues = 0;
+
+        $collection = new Collection([1, 2, 3, 4, 5]);
+
+        $collection->each(function ($value, $key) use (&$sumKeys, &$sumValues) {
+            $sumKeys += $key;
+            $sumValues += $value;
+
+            return $value !== 4; // Break if it's false.
+        });
+
+        $this->assertEquals(6, $sumKeys);
+        $this->assertEquals(10, $sumValues);
+    }
+
     public function testCanUnique()
     {
         $this->assertEquals([
