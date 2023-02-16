@@ -126,7 +126,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
         }
 
         if (is_object($item)) {
-            // We have not to direct access it to let magic getter kicks in.
+            // We have to not direct access it to let magic getter kicks in.
             $value = $item->{$key} ?? null;
 
             if (isset($value)) {
