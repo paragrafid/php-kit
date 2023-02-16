@@ -370,12 +370,12 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      */
     public function whereIn(...$args)
     {
-        if (!isset($args[0]) && !isset($args[1])) {
+        if (!isset($args[0])) {
             throw new InvalidArgumentException('Invalid arguments.');
         }
 
         if (is_string($args[0])
-            && is_array($args[1])
+            && isset($args[1]) && is_array($args[1])
             && (!isset($args[2]) || is_bool($args[2]))
             && (!isset($args[3]) || is_bool($args[3]))
         ) {
