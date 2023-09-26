@@ -9,7 +9,6 @@ use Exception;
 use InvalidArgumentException;
 use IteratorAggregate;
 use JsonSerializable;
-
 use Paragraf\Kit\Traits\DisableSet;
 
 class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSerializable
@@ -374,7 +373,8 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
             throw new InvalidArgumentException('Invalid arguments.');
         }
 
-        if (is_string($args[0])
+        if (
+            is_string($args[0])
             && isset($args[1]) && is_array($args[1])
             && (!isset($args[2]) || is_bool($args[2]))
             && (!isset($args[3]) || is_bool($args[3]))
@@ -393,7 +393,8 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
 
                 return $negated ? !$is : $is;
             };
-        } elseif (is_array($args[0])
+        } elseif (
+            is_array($args[0])
             && (!isset($args[1]) || is_bool($args[1]))
             && (!isset($args[2]) || is_bool($args[2]))
         ) {
