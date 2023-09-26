@@ -623,6 +623,40 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     }
 
     /**
+     * Check if every item matches the given condition.
+     *
+     * @param callable $callback
+     * @return boolean
+     */
+    public function every(callable $callback): bool
+    {
+        foreach ($this->items as $key => $item) {
+            if (Conversion::toBoolean($callback($item, $key)) === false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Check if some items match the given condition.
+     *
+     * @param callable $callback
+     * @return boolean
+     */
+    public function some(callable $callback): bool
+    {
+        foreach ($this->items as $key => $item) {
+            if (Conversion::toBoolean($callback($item, $key)) === true) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Get items.
      *
      * @return array<int|string, mixed>

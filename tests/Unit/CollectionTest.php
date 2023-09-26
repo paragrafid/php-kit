@@ -485,4 +485,34 @@ class CollectionTest extends TestCase
                 ->items()
         );
     }
+
+    public function testCanEvery()
+    {
+        $this->assertTrue((new Collection())->every(function ($item) {
+            return $item === true;
+        }));
+
+        $this->assertTrue((new Collection([1, 2, 3, 4, 5]))->every(function ($item) {
+            return is_int($item) && $item > 0 && $item < 6;
+        }));
+
+        $this->assertFalse((new Collection([1, 2, 3, 4, 5]))->every(function ($item, $key) {
+            return !is_int($key);
+        }));
+    }
+
+    public function testCanSome()
+    {
+        $this->assertFalse((new Collection())->some(function ($item) {
+            return $item === true;
+        }));
+
+        $this->assertTrue((new Collection([1, 2, 3, 4, 5]))->some(function ($item) {
+            return $item > 3;
+        }));
+
+        $this->assertFalse((new Collection([1, 2, 3, 4, 5]))->some(function ($item, $key) {
+            return !is_int($key);
+        }));
+    }
 }
